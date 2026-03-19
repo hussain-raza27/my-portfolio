@@ -121,13 +121,12 @@ p { line-height: 1.6; margin-bottom: 20px; color: #444; }
 }
 
 .btn-projects {
-    background: #333; 
-    color: white; 
-    padding: 12px 20px; 
-    text-decoration: none; 
-    font-weight: bold; 
-    font-size: 0.75rem; 
-    margin-top: auto;
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
     transition: 0.3s;
 }
 
