@@ -1,53 +1,172 @@
 /* General Styles */
-* { margin: 0; padding: 0; -moz-stack-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-body { background-color: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; /* Fixed typo from -moz-stack-sizing */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
+
+body { 
+    background-color: #f0f4f8; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+    padding: 20px; /* Prevents container from touching screen edges */
+}
 
 .portfolio-container {
     display: flex;
-    width: 900px;
+    width: 100%;       /* Flexible width */
+    max-width: 1000px; /* Limits size on large monitors */
     background: white;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
+    transition: all 0.3s ease;
 }
 
 /* Left Column */
 .left-column {
     width: 35%;
-    background-color: #d1dce5; /* Matches the image light blue/gray */
+    background-color: #d1dce5; 
     padding: 40px 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* Centers content vertically */
 }
 
 .profile-img img {
-    width: 200px;
-    height: 200px;
+    width: 180px;      /* Slightly smaller for better balance */
+    height: 180px;
     border-radius: 50%;
     object-fit: cover;
     border: 5px solid white;
-    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.tagline { font-size: 0.9rem; color: #555; margin: 15px 0; }
-.btn-email { background: #333; color: white; padding: 10px 20px; text-decoration: none; font-weight: bold; font-size: 0.8rem; margin-top: auto; }
+.tagline { 
+    font-size: 0.9rem; 
+    color: #444; 
+    margin: 20px 0; 
+    font-weight: 500;
+}
+
+.btn-email { 
+    background: #333; 
+    color: white; 
+    padding: 12px 25px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    font-size: 0.85rem; 
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.btn-email:hover { background: #555; }
 
 /* Right Column */
-.right-column { width: 65%; padding: 50px; color: #333; }
-h2 { font-size: 2rem; margin-bottom: 10px; }
-hr { width: 50px; border: 2px solid #333; margin-bottom: 20px; }
-p { line-height: 1.6; margin-bottom: 20px; }
-ul { list-style: none; }
-ul li { margin-bottom: 10px; font-size: 0.95rem; }
+.right-column { 
+    width: 65%; 
+    padding: 50px; 
+    color: #333; 
+    display: flex;
+    flex-direction: column;
+}
 
-.actions { display: flex; align-items: center; justify-content: space-between; margin-top: 40px; }
-.btn-resume { border: 1px solid #333; padding: 8px 25px; text-decoration: none; color: #333; }
-.social-links a { color: #333; margin-left: 15px; font-size: 1.2rem; }
+h1 { margin-bottom: 5px; font-size: 1.8rem; }
+h2 { font-size: 1.6rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+h3 { margin: 20px 0 10px; font-size: 1.1rem; color: #555; }
 
-/* Responsive for Mobile */
+.underline { /* Better than <hr> for styling */
+    width: 40px; 
+    height: 4px; 
+    background: #333; 
+    margin-bottom: 25px; 
+}
+
+p { line-height: 1.7; margin-bottom: 20px; color: #444; }
+
+.skills-list li { 
+    margin-bottom: 12px; 
+    font-size: 0.95rem; 
+    display: flex;
+    align-items: flex-start;
+}
+
+/* Adds a nice bullet point purely via CSS */
+.skills-list li::before {
+    content: "•";
+    color: #333;
+    font-weight: bold;
+    display: inline-block; 
+    width: 1em;
+    margin-left: -1em;
+}
+
+.actions { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-top: auto; /* Pushes links to the bottom */
+    padding-top: 30px;
+    flex-wrap: wrap; 
+    gap: 15px;
+}
+
+.btn-resume { 
+    border: 2px solid #333; 
+    padding: 10px 25px; 
+    text-decoration: none; 
+    color: #333; 
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.btn-resume:hover { background: #333; color: white; }
+
+.social-links a { 
+    color: #333; 
+    margin-left: 15px; 
+    font-size: 1.4rem; 
+    transition: transform 0.3s;
+    display: inline-block;
+}
+
+.social-links a:hover { transform: translateY(-3px); }
+
+/* --- RESPONSIVE UPDATES --- */
+
 @media (max-width: 768px) {
-    .portfolio-container { flex-direction: column; width: 95%; }
-    .left-column, .right-column { width: 100%; }
+    body { padding: 10px; }
+    
+    .portfolio-container { 
+        flex-direction: column; 
+        width: 100%; 
+    }
+    
+    .left-column, .right-column { 
+        width: 100%; 
+    }
+    
+    .left-column { padding: 30px; }
+    
+    .right-column { 
+        padding: 30px 20px; 
+        text-align: center; 
+    }
+
+    .underline { margin: 0 auto 20px; } /* Center underline on mobile */
+
+    .skills-list li { justify-content: center; } /* Center text on mobile */
+
+    .actions { 
+        justify-content: center; 
+        flex-direction: column; 
+    }
+    
+    .social-links { margin-top: 10px; }
+    .social-links a { margin: 0 10px; }
 }
