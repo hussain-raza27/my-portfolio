@@ -1,0 +1,53 @@
+/* General Styles */
+* { margin: 0; padding: 0; -moz-stack-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body { background-color: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+.portfolio-container {
+    display: flex;
+    width: 900px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Left Column */
+.left-column {
+    width: 35%;
+    background-color: #d1dce5; /* Matches the image light blue/gray */
+    padding: 40px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-img img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid white;
+    margin-bottom: 20px;
+}
+
+.tagline { font-size: 0.9rem; color: #555; margin: 15px 0; }
+.btn-email { background: #333; color: white; padding: 10px 20px; text-decoration: none; font-weight: bold; font-size: 0.8rem; margin-top: auto; }
+
+/* Right Column */
+.right-column { width: 65%; padding: 50px; color: #333; }
+h2 { font-size: 2rem; margin-bottom: 10px; }
+hr { width: 50px; border: 2px solid #333; margin-bottom: 20px; }
+p { line-height: 1.6; margin-bottom: 20px; }
+ul { list-style: none; }
+ul li { margin-bottom: 10px; font-size: 0.95rem; }
+
+.actions { display: flex; align-items: center; justify-content: space-between; margin-top: 40px; }
+.btn-resume { border: 1px solid #333; padding: 8px 25px; text-decoration: none; color: #333; }
+.social-links a { color: #333; margin-left: 15px; font-size: 1.2rem; }
+
+/* Responsive for Mobile */
+@media (max-width: 768px) {
+    .portfolio-container { flex-direction: column; width: 95%; }
+    .left-column, .right-column { width: 100%; }
+}
