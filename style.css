@@ -2,7 +2,7 @@
 * { 
     margin: 0; 
     padding: 0; 
-    box-sizing: border-box; /* Fixed typo from -moz-stack-sizing */
+    box-sizing: border-box; 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
 }
 
@@ -12,18 +12,17 @@ body {
     justify-content: center; 
     align-items: center; 
     min-height: 100vh; 
-    padding: 20px; /* Prevents container from touching screen edges */
+    padding: 20px;
 }
 
 .portfolio-container {
     display: flex;
-    width: 100%;       /* Flexible width */
-    max-width: 1000px; /* Limits size on large monitors */
+    width: 100%;
+    max-width: 950px; /* Slightly wider to accommodate new button */
     background: white;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
-    transition: all 0.3s ease;
 }
 
 /* Left Column */
@@ -35,138 +34,122 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Centers content vertically */
 }
 
 .profile-img img {
-    width: 180px;      /* Slightly smaller for better balance */
+    width: 180px;
     height: 180px;
     border-radius: 50%;
     object-fit: cover;
     border: 5px solid white;
+    margin-bottom: 20px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .tagline { 
-    font-size: 0.9rem; 
+    font-size: 0.85rem; 
     color: #444; 
-    margin: 20px 0; 
-    font-weight: 500;
+    margin: 15px 0; 
+    line-height: 1.4;
 }
 
 .btn-email { 
     background: #333; 
     color: white; 
-    padding: 12px 25px; 
+    padding: 12px 20px; 
     text-decoration: none; 
     font-weight: bold; 
-    font-size: 0.85rem; 
-    border-radius: 4px;
-    transition: background 0.3s;
+    font-size: 0.75rem; 
+    margin-top: auto;
+    transition: 0.3s;
 }
 
-.btn-email:hover { background: #555; }
+.btn-email:hover { background: #000; }
 
 /* Right Column */
 .right-column { 
     width: 65%; 
-    padding: 50px; 
+    padding: 45px; 
     color: #333; 
-    display: flex;
-    flex-direction: column;
 }
 
-h1 { margin-bottom: 5px; font-size: 1.8rem; }
-h2 { font-size: 1.6rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-h3 { margin: 20px 0 10px; font-size: 1.1rem; color: #555; }
+h1 { margin-bottom: 5px; }
+h2 { font-size: 1.8rem; margin-bottom: 5px; }
 
-.underline { /* Better than <hr> for styling */
+.underline { 
     width: 40px; 
     height: 4px; 
     background: #333; 
-    margin-bottom: 25px; 
+    margin-bottom: 20px; 
 }
 
-p { line-height: 1.7; margin-bottom: 20px; color: #444; }
+p { line-height: 1.6; margin-bottom: 20px; color: #444; }
 
+.skills-list { list-style: none; }
 .skills-list li { 
     margin-bottom: 12px; 
     font-size: 0.95rem; 
-    display: flex;
-    align-items: flex-start;
+    position: relative;
+    padding-left: 15px;
 }
 
-/* Adds a nice bullet point purely via CSS */
 .skills-list li::before {
     content: "•";
+    position: absolute;
+    left: 0;
     color: #333;
-    font-weight: bold;
-    display: inline-block; 
-    width: 1em;
-    margin-left: -1em;
 }
 
+/* Actions & Buttons */
 .actions { 
     display: flex; 
     align-items: center; 
-    justify-content: space-between; 
-    margin-top: auto; /* Pushes links to the bottom */
-    padding-top: 30px;
-    flex-wrap: wrap; 
-    gap: 15px;
+    justify-content: flex-start; 
+    margin-top: 35px; 
+    gap: 15px; /* Spaces buttons evenly */
+    flex-wrap: wrap;
 }
 
 .btn-resume { 
     border: 2px solid #333; 
-    padding: 10px 25px; 
+    padding: 8px 20px; 
     text-decoration: none; 
     color: #333; 
     font-weight: bold;
-    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: 0.3s;
 }
 
-.btn-resume:hover { background: #333; color: white; }
-
-.social-links a { 
-    color: #333; 
-    margin-left: 15px; 
-    font-size: 1.4rem; 
-    transition: transform 0.3s;
-    display: inline-block;
+.btn-projects {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: 0.3s;
 }
 
-.social-links a:hover { transform: translateY(-3px); }
+.btn-resume:hover { background: #f0f0f0; }
+.btn-projects:hover { background: #555; }
 
-/* --- RESPONSIVE UPDATES --- */
+.social-links { margin-left: auto; display: flex; align-items: center; }
+.social-links a { color: #333; margin-left: 15px; font-size: 1.3rem; transition: 0.3s; }
+.social-links a:hover { color: #2563eb; }
 
+/* Responsive for Mobile */
 @media (max-width: 768px) {
-    body { padding: 10px; }
-    
     .portfolio-container { 
         flex-direction: column; 
-        width: 100%; 
+        width: 95%; 
+        margin: 20px 0;
     }
+    .left-column, .right-column { width: 100%; }
+    .right-column { padding: 30px 20px; text-align: center; }
+    .underline { margin: 0 auto 20px; }
+    .skills-list li { padding-left: 0; }
+    .skills-list li::before { display: none; }
     
-    .left-column, .right-column { 
-        width: 100%; 
-    }
-    
-    .left-column { padding: 30px; }
-    
-    .right-column { 
-        padding: 30px 20px; 
-        text-align: center; 
-    }
-
-    .underline { margin: 0 auto 20px; } /* Center underline on mobile */
-
-    .skills-list li { justify-content: center; } /* Center text on mobile */
-
-    .actions { 
-        justify-content: center; 
-        flex-direction: column; 
-    }
-    
-    .social-links { margin-top: 10px; }
-    .social-links a { margin: 0 10px; }
+    .actions { justify-content: center; }
+    .social-links { width: 100%; justify-content: center; margin-top: 20px; margin-left: 0; }
 }
