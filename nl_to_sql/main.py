@@ -5,10 +5,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
-from nltk.stem import PorterStemmer
-from nltk.tokenize import wordpunct_tokenize
-
-
 AGGREGATE_MAP = {
     "count": "COUNT",
     "total": "COUNT",
@@ -45,7 +41,6 @@ class ParsedIntent:
 class NLToSQLConverter:
     def __init__(self, schema: Dict[str, List[str]]) -> None:
         self.schema = schema
-        self.stemmer = PorterStemmer()
         self.all_columns: Dict[str, Set[str]] = {
             table: {col.lower() for col in cols} for table, cols in schema.items()
         }
@@ -65,10 +60,16 @@ class NLToSQLConverter:
         return text
 
     def _tokenize(self, text: str) -> List[str]:
-        return [token for token in wordpunct_tokenize(text) if token.strip()]
+        return re.findall(r"[a-zA-Z0-9_@.\-]+", text)
 
     def _stem(self, token: str) -> str:
-        return self.stemmer.stem(token)
+        token = token.lower()
+        if token.endswith("ies") and len(token) > 3:
+            return token[:-3] + "y"
+        for suffix in ("ing", "ed", "es", "s"):
+            if token.endswith(suffix) and len(token) > len(suffix) + 2:
+                return token[: -len(suffix)]
+        return token
 
     def _infer_table(self, text: str) -> str:
         tokens = self._tokenize(text)

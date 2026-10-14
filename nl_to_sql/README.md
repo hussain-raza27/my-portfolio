@@ -4,7 +4,7 @@ This mini project converts natural language requests into SQL queries.
 
 ## Features
 - Built with Python
-- Uses NLP techniques (tokenization + stemming via NLTK)
+- Uses lightweight NLP techniques (regex tokenization + simple stemming)
 - Supports:
   - table detection
   - column selection
