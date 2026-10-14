@@ -101,6 +101,15 @@ class NLToSQLConverter:
         if "all" in text or "everything" in text or "*" in text:
             return ["*"]
 
+        explicit_select = re.search(r"(show|select|get|list)\s+(.*?)\s+(from|in)\s+", text)
+        if explicit_select:
+            requested = explicit_select.group(2)
+            possible = [part.strip() for part in re.split(r",| and ", requested) if part.strip()]
+            resolved = [self._best_column_match(chunk, table) for chunk in possible]
+            resolved = [item for item in resolved if item]
+            if resolved:
+                return resolved
+
         for key, sql_fn in AGGREGATE_MAP.items():
             if key in text:
                 col = self._best_column_match(text, table, excluded={"id"})
@@ -116,15 +125,6 @@ class NLToSQLConverter:
 
         if matches:
             return sorted(set(matches), key=matches.index)
-
-        explicit_select = re.search(r"(show|select|get|list)\s+(.*?)\s+(from|in)\s+", text)
-        if explicit_select:
-            requested = explicit_select.group(2)
-            possible = [part.strip() for part in re.split(r",| and ", requested) if part.strip()]
-            resolved = [self._best_column_match(chunk, table) for chunk in possible]
-            resolved = [item for item in resolved if item]
-            if resolved:
-                return resolved
 
         if "how many" in text:
             return ["COUNT(*)"]
@@ -161,12 +161,13 @@ class NLToSQLConverter:
 
     def _infer_where(self, text: str, table: str) -> Optional[str]:
         lower_text = text
+        clause_text = lower_text.split(" where ", maxsplit=1)[1] if " where " in lower_text else lower_text
 
         for phrase, operator in sorted(OPERATORS.items(), key=lambda item: len(item[0]), reverse=True):
-            if phrase not in lower_text:
+            if phrase not in clause_text:
                 continue
 
-            parts = lower_text.split(phrase, maxsplit=1)
+            parts = clause_text.split(phrase, maxsplit=1)
             if len(parts) < 2:
                 continue
 
@@ -185,7 +186,7 @@ class NLToSQLConverter:
                 return f"{column} {operator} {value}"
             return f"{column} {operator} '{value}'"
 
-        direct_match = re.search(r"where\s+([a-zA-Z_ ]+)\s*=\s*([a-zA-Z0-9_@.\-]+)", lower_text)
+        direct_match = re.search(r"([a-zA-Z_ ]+)\s*=\s*([a-zA-Z0-9_@.\-]+)", clause_text)
         if direct_match:
             column = self._best_column_match(direct_match.group(1), table)
             value = direct_match.group(2)
@@ -199,6 +200,7 @@ class NLToSQLConverter:
     def _extract_value(self, text: str) -> Optional[str]:
         value = text.strip()
         value = re.sub(r"^(to|than|is|the)\s+", "", value)
+        value = re.sub(r"\b(top|first|limit)\s+\d+\b", "", value)
         value = re.sub(r"\s+(rows|records|users|orders|products)$", "", value)
         value = value.strip(" '\".,")
         if not value:
